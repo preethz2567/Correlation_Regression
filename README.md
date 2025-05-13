@@ -1,4 +1,4 @@
-# EXP-03
+
 # Correlation and regression for data analysis
 # Aim : 
 
@@ -22,46 +22,46 @@ If y represents the dependent variable and x the independent variable, this rela
 
 # Program :
 ### DEVELOPED BY : PREETHI D
-### REG NO: 212224040250
+### REG NO : 212224040250
 ```
-import math
-arr_time=float(input("Enter the mean inter arrival time of objects from Feeder (in secs): "))
-ser_time=float(input("Enter the mean  inter service time of Lathe Machine (in secs) :  "))
-Robot_time=float(input("Enter the Additional time taken for the Robot (in secs) :  "))
-c=int(input("Number of service centre :  "))
-lam=1/arr_time
-mu=1/(ser_time+Robot_time)
-print("--------------------------------------------------------------")
-print("Multiple Server with Infinite Capacity - (M/M/c):(oo/FIFO)")
-print("--------------------------------------------------------------")
-print("The mean arrival rate per second : %0.2f "%lam)
-print("The mean service rate per second : %0.2f "%mu)
-rho=lam/(c*mu)
-sum=(lam/mu)**c*(1/(1-rho))/math.factorial(c)
-for i in range(0,c):
-    sum=sum+(lam/mu)**i/math.factorial(i)
-P0=1/sum
-if (rho<1):
-    Lq=(P0/math.factorial(c))*(1/c)*(lam/mu)**(c+1)/(1-rho)**2
-    Ls=Lq+lam/mu
-    Ws=Ls/lam
-    Wq=Lq/lam
-    print("Average number of objects in the system : %0.2f "%Ls)
-    print("Average number of objects in the conveyor :  %0.2f "%Lq)
-    print("Average waiting time of an object in the system : %0.2f secs"%Ws)
-    print("Average waiting time of an object in the conveyor : %0.2f secs"%Wq)
-    print("Probability that the system is busy : %0.2f "%(rho))
-    print("Probability that the system is empty : %0.2f "%(1-rho))
-else:
-    print("Warning! Objects Over flow will happen in the conveyor")
-print("--------------------------------------------------------------")
+  import numpy as np
+  import math
+  import matplotlib.pyplot as plt
+  x=[ int(i) for i in input().split()]
+  y=[ int(i) for i in input().split()]
+  N=len(x)
+  Sx=0
+  Sy=0
+  Sxy=0
+  Sx2=0
+  Sy2=0
+  for i in range(0,N):
+      Sx=Sx+x[i]
+      Sy=Sy+y[i]
+      Sxy=Sxy+x[i]*y[i]
+      Sx2=Sx2+x[i]**2
+      Sy2=Sy2+y[i]**2
+  r=(N*Sxy-Sx*Sy)/(math.sqrt(N*Sx2-Sx**2)*math.sqrt(N*Sy2-Sy**2))
+  print("The Correlation coefficient is %0.3f"%r)
+  byx=(N*Sxy-Sx*Sy)/(N*Sx2-Sx**2)
+  xmean=Sx/N
+  ymean=Sy/N
+  print("The Regression line Y on X is ::: y = %0.3f + %0.3f (x-%0.3f)"%(ymean,byx,xmean))
+  plt.scatter(x,y)
+  def Reg(x):
+    return ymean + byx*(x-xmean)
+  x=np.linspace(20,80,51)
+  y1=Reg(x)
+  plt.plot(x,y1,'r')
+  plt.xlabel('x-data')
+  plt.ylabel('y-data')
+  plt.legend(['Regression Line','Data points'])
+ 
 ```
+# Output : 
+![image](https://github.com/user-attachments/assets/caa2fc3c-ceaa-4616-841e-5f9a5d54427b)
 
-
-# Output 
-![image](https://github.com/user-attachments/assets/d40240c3-a6a9-440e-8e7d-c7fd14eaa939)
 
 # Result
-Thus the average number of materials in the system and conveyor, waiting time of each material in the system and conveyor is found successfully.
-
+The Correlation and regression for data analysis of objects from feeder using probability distribution are calculated.
 
